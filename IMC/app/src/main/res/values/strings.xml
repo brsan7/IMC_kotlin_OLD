@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">IMC</string>
+    <string name="msgInicio">IMC</string>
+    <string name="calcularBt">calcular</string>
+    <string name="pesoHint">Peso(Kg)</string>
+    <string name="alturaHint">Altura(M)</string>
+    <string name="abaixoPeso">Você está abaixo do Peso Ideal\n</string>
+    <string name="pesoIdeal">Você está no do Peso Ideal\n</string>
+    <string name="acimaPeso">Você está acima do Peso Ideal\n</string>
+    <string name="obesidade1">Você está na Obesidade Grau 1 (Leve)\n</string>
+    <string name="obesidade2">Você está na Obesidade Grau 2 (Severa)\n</string>
+    <string name="obesidade3">Você está na Obesidade Grau 3 (Mórbida)\n</string>
+    <string name="calcPesoIdealCima">O Peso Ideal para a sua altura é entre:\n\n</string>
+    <string name="calcPesoIdealBaixo">O Peso Ideal para a sua altura é entre:\n\n</string>
+    <string name="e">Kg\ne\n</string>
+    <string name="kg">Kg</string>
+    <string name="genBtMasculino">Masculino</string>
+    <string name="genBtFeminino">Feminino</string>
+    <string name="peso_ideal">Peso Ideal</string>
+    <string name="falta">"\nFaltam\n"</string>
+    <string name="para">\nPara o Peso Ideal</string>
+    <string name="msgToast">Digite o Peso e Altura</string>
+</resources>
