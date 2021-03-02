@@ -11,7 +11,8 @@
     android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
-        app:titleTextColor="@color/black"
+        app:titleTextColor="@color/verde"
+        android:textStyle="bold"
         android:background="#2C2B2B"
         android:elevation="4dp"
         android:layout_width="match_parent"

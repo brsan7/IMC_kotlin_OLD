@@ -18,13 +18,13 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_main)
-        setupToolBar(toolBar, getString(string.mainTitulo),false)
+        setupToolBar(toolBar, getString(string.mainTitulo), false)
         setListeners()
         setUltimoRegistro()
     }
 
     private fun setUltimoRegistro(){
-        var lista = HistoricoApplication.instance.helperDB?.buscarContatos("",false)
+        var lista = HistoricoApplication.instance.helperDB?.buscarContatos("", false)
         var itemHist = lista?.let { lista.getOrNull(it.lastIndex) } ?: return
         etPeso.setText(itemHist.peso)
         etAltura.setText(itemHist.altura)
@@ -51,14 +51,14 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onClickAdd(){
-        val intent = Intent(this,HistoricoActivity::class.java)
+        val intent = Intent(this, HistoricoActivity::class.java)
         startActivity(intent)
     }
 
     private fun calcularImc(pesoIn: String, alturaIn: String){
-        val peso = pesoIn.toFloatOrNull()
-        val altura = alturaIn.toFloatOrNull()
-        var formatar = DecimalFormat(".##")
+        var peso = pesoIn.toFloatOrNull()
+        var altura = alturaIn.toFloatOrNull()
+        var formatar = DecimalFormat("0.##")
 
         if (peso!=null && altura!=null) {
             val imc = peso / (altura * altura)
@@ -127,11 +127,11 @@ class MainActivity : BaseActivity() {
         val date = Calendar.getInstance().time
         var dateTimeFormat = SimpleDateFormat("dd/MM/yyyy_HH:mm:ss", Locale.getDefault())
         val itemHist = HistoricoVO(
-            data = dateTimeFormat.format(date),
-            peso = formatar.format(peso),
-            altura = formatar.format(altura),
-            genero = seletorGen.text.toString(),
-            observacao = ""
+                data = dateTimeFormat.format(date),
+                peso = pesoIn,
+                altura = alturaIn,
+                genero = seletorGen.text.toString(),
+                observacao = ""
         )
         pbMain.visibility = View.VISIBLE
         Thread(Runnable {
