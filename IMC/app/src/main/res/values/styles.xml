@@ -6,6 +6,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_margin">8dp</item>
+       <item name="android:textColor">@color/black</item>
         <item name="android:background">@color/cinza</item>
         <item name="android:layout_width">96dp</item>
         <item name="android:layout_height">32dp</item>

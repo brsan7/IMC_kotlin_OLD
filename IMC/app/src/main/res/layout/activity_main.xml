@@ -1,97 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/verde"
-    android:gravity="center"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/resultadoTv"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/msgInicio"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/verde"
+        android:gravity="center"
+        tools:context=".MainActivity">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
+            app:titleTextColor="@color/black"
+            android:textStyle="bold"
+            android:background="#2C2B2B"
+            android:elevation="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/faixaPesoTv"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:text="@string/peso_ideal"
-        app:layout_constraintBottom_toTopOf="@+id/seletorGen"
-        app:layout_constraintEnd_toStartOf="@id/imagemResult"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resultadoTv" />
 
-    <TextView
-        android:id="@+id/resultadoFaixaPesoTv"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/seletorGen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imagemResult"
-        app:layout_constraintTop_toBottomOf="@+id/resultadoTv" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:src="@drawable/historico"
+            android:backgroundTint="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/toolBar"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imagemResult"
+        <TextView
+            android:id="@+id/resultadoTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msgInicio"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/toolBar"/>
+
+        <TextView
+            android:id="@+id/faixaPesoTv"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:text="@string/peso_ideal"
+            app:layout_constraintBottom_toTopOf="@+id/seletorGen"
+            app:layout_constraintEnd_toStartOf="@id/imagemResult"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultadoTv" />
+
+        <TextView
+            android:id="@+id/resultadoFaixaPesoTv"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            app:layout_constraintBottom_toTopOf="@+id/seletorGen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imagemResult"
+            app:layout_constraintTop_toBottomOf="@+id/resultadoTv" />
+
+        <ImageView
+            android:id="@+id/imagemResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/seletorGen"
+            app:layout_constraintEnd_toStartOf="@+id/resultadoFaixaPesoTv"
+            app:layout_constraintStart_toEndOf="@+id/faixaPesoTv"
+            app:layout_constraintTop_toBottomOf="@+id/resultadoTv"
+            app:srcCompat="@drawable/m2" />
+
+        <EditText
+            android:id="@+id/etPeso"
+            style="@style/inputStyle"
+            android:background="#707070"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:hint="@string/pesoHint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/calcularBt"/>
+
+
+        <EditText
+            android:id="@+id/etAltura"
+            style="@style/inputStyle"
+            android:hint="@string/alturaHint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/calcularBt"/>
+
+        <ToggleButton
+            android:id="@+id/seletorGen"
+            style="@style/btStyles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/genBtMasculino"
+            android:textOn="@string/genBtFeminino"
+            app:layout_constraintBottom_toTopOf="@+id/calcularBt"
+            app:layout_constraintEnd_toStartOf="@+id/etAltura"
+            app:layout_constraintStart_toEndOf="@+id/etPeso" />
+
+        <Button
+            android:id="@+id/calcularBt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/calcularBt"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/btStyles" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/pbMain"
+        android:layout_gravity="center"
+        android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/seletorGen"
-        app:layout_constraintEnd_toStartOf="@+id/resultadoFaixaPesoTv"
-        app:layout_constraintStart_toEndOf="@+id/faixaPesoTv"
-        app:layout_constraintTop_toBottomOf="@+id/resultadoTv"
-        app:srcCompat="@drawable/m2" />
-
-    <EditText
-        android:id="@+id/pesoTed"
-        style="@style/inputStyle"
-        android:hint="@string/pesoHint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/calcularBt"/>
-
-
-    <EditText
-        android:id="@+id/alturaTed"
-        style="@style/inputStyle"
-        android:hint="@string/alturaHint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/calcularBt"/>
-
-    <ToggleButton
-        android:id="@+id/seletorGen"
-        style="@style/btStyles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textOff="@string/genBtMasculino"
-        android:textOn="@string/genBtFeminino"
-        app:layout_constraintBottom_toTopOf="@+id/calcularBt"
-        app:layout_constraintEnd_toStartOf="@+id/alturaTed"
-        app:layout_constraintStart_toEndOf="@+id/pesoTed" />
-
-    <Button
-        android:id="@+id/calcularBt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/calcularBt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        style="@style/btStyles" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content">
+    </ProgressBar>
+</FrameLayout>

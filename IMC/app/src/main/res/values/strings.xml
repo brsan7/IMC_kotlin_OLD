@@ -20,4 +20,21 @@
     <string name="falta">"\nFaltam\n"</string>
     <string name="para">\nPara o Peso Ideal</string>
     <string name="msgToast">Digite o Peso e Altura</string>
+    <string name="mainTitulo">Cálculo do IMC</string>
+    <string name="seletorGenCMP">Feminino</string>
+    <string name="constItemHistPeso"><![CDATA["  >  Peso: "]]></string>
+    <string name="constKg">Kg</string>
+    <string name="constHistEditData">Data:</string>
+    <string name="constHistEditPeso">Peso:</string>
+    <string name="constHistEditKg">"Kg      "</string>
+    <string name="constHistEditAltura">Altura:</string>
+    <string name="constHistEditM">M</string>
+    <string name="constHistEditGenero">Gênero:</string>
+    <string name="constHistEditObservacoes">Observações:</string>
+    <string name="btnHistEditSalvar_registro">Salvar registro</string>
+    <string name="btnHistEditExcluir_registro">Excluir registro</string>
+    <string name="historicoTitulo">Histórico</string>
+    <string name="historicoEditTitulo">Histórico Edit</string>
+    <string name="historicoEditTituloCMP">Histórico Edit</string>
+    <string name="historicoTituloCMP">Histórico</string>
 </resources>
