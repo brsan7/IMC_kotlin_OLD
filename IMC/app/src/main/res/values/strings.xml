@@ -22,7 +22,6 @@
     <string name="msgToast">Digite o Peso e Altura</string>
     <string name="mainTitulo">Cálculo do IMC</string>
     <string name="seletorGenCMP">Feminino</string>
-    <string name="constItemHistPeso"><![CDATA["  >  Peso: "]]></string>
     <string name="constKg">Kg</string>
     <string name="constHistEditData">Data:</string>
     <string name="constHistEditPeso">Peso:</string>

@@ -19,6 +19,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+     <CalendarView
+         android:id="@+id/calBusca"
+         android:weekDayTextAppearance="@color/black"
+         android:layout_width="match_parent"
+         android:layout_height="256dp"/>
 
 
     <FrameLayout

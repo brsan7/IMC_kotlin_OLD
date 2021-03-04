@@ -3,6 +3,7 @@ package com.brsan7.imc
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.CalendarView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brsan7.imc.adapter.HistoricoAdapter
 import com.brsan7.imc.application.HistoricoApplication
@@ -18,6 +19,7 @@ class HistoricoActivity : BaseActivity() {
         setContentView(R.layout.activity_historico)
         setupToolBar(toolBar, getString(R.string.historicoTitulo),true)
         setupRecyclerView()
+        onClickBuscaData()
     }
 
     private fun setupRecyclerView(){
@@ -26,7 +28,7 @@ class HistoricoActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        onClickBuscar()
+        onClickBuscar("",true)
     }
 
     private fun onClickItemRecyclerView(index: Int){
@@ -35,13 +37,13 @@ class HistoricoActivity : BaseActivity() {
         startActivity(intent)
     }
 
-    private fun onClickBuscar(){
+    private fun onClickBuscar(busca:String, isBuscaPorData:Boolean){
         var listaFiltrada: List<HistoricoVO> = mutableListOf()
         pbHistorico.visibility = View.VISIBLE
         Thread(Runnable {
             Thread.sleep(500)//retorno visual de acesso e alteração no Banco de Dados
             try {
-                listaFiltrada = HistoricoApplication.instance.helperDB?.buscarContatos("",false) ?: mutableListOf()
+                listaFiltrada = HistoricoApplication.instance.helperDB?.buscarRegistros(busca,isBuscaPorData) ?: mutableListOf()
             }catch (ex: Exception){
                 ex.printStackTrace()
             }
@@ -52,4 +54,11 @@ class HistoricoActivity : BaseActivity() {
             }
         }).start()
     }
+
+    fun onClickBuscaData() {
+        calBusca.setOnDateChangeListener(CalendarView.OnDateChangeListener { view, ano, mes, dia ->
+            onClickBuscar("$dia/${mes+1}/$ano",false)
+        })
+    }
 }
+

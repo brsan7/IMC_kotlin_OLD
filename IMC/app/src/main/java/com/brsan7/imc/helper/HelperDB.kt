@@ -45,15 +45,15 @@ class HelperDB (
         onCreate(db)
     }
 
-    fun buscarContatos(busca : String, isBuscaPorID : Boolean = false) : List<HistoricoVO>{
+    fun buscarRegistros(busca : String, isBuscaPorData : Boolean = false) : List<HistoricoVO>{
 
         val db = readableDatabase ?: return mutableListOf()
         var lista = mutableListOf<HistoricoVO>()
         val sql:String
-        if(isBuscaPorID){
-            sql = "SELECT * FROM $TABLE_NAME WHERE $COLUMNS_ID = '$busca'"
-        }else{
+        if(isBuscaPorData){
             sql = "SELECT * FROM $TABLE_NAME"
+        }else{
+            sql = "SELECT * FROM $TABLE_NAME WHERE $COLUMNS_DATA LIKE '%$busca%'"
         }
         var cursor = db.rawQuery(sql, arrayOf())
         if (cursor == null){
@@ -75,7 +75,7 @@ class HelperDB (
         return lista
     }
 
-    fun salvarContato(itemHist: HistoricoVO){
+    fun salvarRegistro(itemHist: HistoricoVO){
         val db: SQLiteDatabase = writableDatabase ?: return
         val sql = "INSERT INTO $TABLE_NAME " +
                 "($COLUMNS_DATA,$COLUMNS_PESO,$COLUMNS_ALTURA,$COLUMNS_GENERO,$COLUMNS_OBS) " +
@@ -85,7 +85,7 @@ class HelperDB (
         db.close()
     }
 
-    fun deletarContato(id:Int){
+    fun deletarRegistro(id:Int){
         val db = writableDatabase ?: return
         val sql = "DELETE FROM $TABLE_NAME WHERE $COLUMNS_ID = ?"
         val argumento = arrayOf("$id")
@@ -93,7 +93,7 @@ class HelperDB (
         db.close()
     }
 
-    fun updateContato(itemHist: HistoricoVO){
+    fun updateRegistro(itemHist: HistoricoVO){
         val db = writableDatabase ?: return
         val sql = "UPDATE $TABLE_NAME SET $COLUMNS_OBS = ? WHERE $COLUMNS_ID = ?"
         val argumento = arrayOf(itemHist.observacao,itemHist.id)

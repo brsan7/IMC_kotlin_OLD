@@ -31,7 +31,7 @@ class HistoricoEditActivity : BaseActivity() {
         pbHistoricoEdit.visibility = View.VISIBLE
         Thread(Runnable {
             Thread.sleep(500)//retorno visual de acesso e alteração no Banco de Dados
-            var lista = HistoricoApplication.instance.helperDB?.buscarContatos("$idHistorico",true) ?: return@Runnable
+            var lista = HistoricoApplication.instance.helperDB?.buscarRegistros("$idHistorico",true) ?: return@Runnable
             var itemHist = lista.getOrNull(0) ?: return@Runnable
             runOnUiThread {
                 tvDataEdit.setText(itemHist.data)
@@ -61,7 +61,7 @@ class HistoricoEditActivity : BaseActivity() {
         pbHistoricoEdit.visibility = View.VISIBLE
         Thread(Runnable {
             Thread.sleep(500)//retorno visual de acesso e alteração no Banco de Dados
-            HistoricoApplication.instance.helperDB?.updateContato(itemHist)
+            HistoricoApplication.instance.helperDB?.updateRegistro(itemHist)
             runOnUiThread {
                 finish()
                 pbHistoricoEdit.visibility = View.GONE
@@ -74,7 +74,7 @@ class HistoricoEditActivity : BaseActivity() {
             pbHistoricoEdit.visibility = View.VISIBLE
             Thread(Runnable {
                 Thread.sleep(500)//retorno visual de acesso e alteração no Banco de Dados
-                HistoricoApplication.instance.helperDB?.deletarContato(idHistorico)
+                HistoricoApplication.instance.helperDB?.deletarRegistro(idHistorico)
                 runOnUiThread {
                     finish()
                     pbHistoricoEdit.visibility = View.GONE

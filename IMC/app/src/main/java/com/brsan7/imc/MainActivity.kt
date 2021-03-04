@@ -24,7 +24,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setUltimoRegistro(){
-        var lista = HistoricoApplication.instance.helperDB?.buscarContatos("", false)
+        var lista = HistoricoApplication.instance.helperDB?.buscarRegistros("", false)
         var itemHist = lista?.let { lista.getOrNull(it.lastIndex) } ?: return
         etPeso.setText(itemHist.peso)
         etAltura.setText(itemHist.altura)
@@ -125,7 +125,7 @@ class MainActivity : BaseActivity() {
             Toast.makeText(this, getString(string.msgToast), Toast.LENGTH_SHORT).show()}
 
         val date = Calendar.getInstance().time
-        var dateTimeFormat = SimpleDateFormat("dd/MM/yyyy_HH:mm:ss", Locale.getDefault())
+        var dateTimeFormat = SimpleDateFormat("d/M/yyyy_HH:mm:ss", Locale.getDefault())
         val itemHist = HistoricoVO(
                 data = dateTimeFormat.format(date),
                 peso = pesoIn,
@@ -136,7 +136,7 @@ class MainActivity : BaseActivity() {
         pbMain.visibility = View.VISIBLE
         Thread(Runnable {
             Thread.sleep(500)//retorno visual de acesso e alteração no Banco de Dados
-            HistoricoApplication.instance.helperDB?.salvarContato(itemHist)
+            HistoricoApplication.instance.helperDB?.salvarRegistro(itemHist)
             runOnUiThread {
                 pbMain.visibility = View.GONE
             }
