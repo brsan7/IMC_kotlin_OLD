@@ -31,7 +31,7 @@ class HistoricoEditActivity : BaseActivity() {
         pbHistoricoEdit.visibility = View.VISIBLE
         Thread(Runnable {
             Thread.sleep(500)//retorno visual de acesso e alteração no Banco de Dados
-            var lista = HistoricoApplication.instance.helperDB?.buscarRegistros("$idHistorico",true) ?: return@Runnable
+            var lista = HistoricoApplication.instance.helperDB?.buscarRegistros("$idHistorico",false) ?: return@Runnable
             var itemHist = lista.getOrNull(0) ?: return@Runnable
             runOnUiThread {
                 tvDataEdit.setText(itemHist.data)

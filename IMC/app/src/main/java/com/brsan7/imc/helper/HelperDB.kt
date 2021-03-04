@@ -51,9 +51,9 @@ class HelperDB (
         var lista = mutableListOf<HistoricoVO>()
         val sql:String
         if(isBuscaPorData){
-            sql = "SELECT * FROM $TABLE_NAME"
-        }else{
             sql = "SELECT * FROM $TABLE_NAME WHERE $COLUMNS_DATA LIKE '%$busca%'"
+        }else{
+            sql = "SELECT * FROM $TABLE_NAME WHERE $COLUMNS_ID LIKE '%$busca%'"
         }
         var cursor = db.rawQuery(sql, arrayOf())
         if (cursor == null){

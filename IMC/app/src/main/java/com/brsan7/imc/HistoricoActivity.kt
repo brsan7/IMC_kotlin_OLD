@@ -2,6 +2,9 @@ package com.brsan7.imc
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.CalendarView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +23,23 @@ class HistoricoActivity : BaseActivity() {
         setupToolBar(toolBar, getString(R.string.historicoTitulo),true)
         setupRecyclerView()
         onClickBuscaData()
+        calBusca.visibility = View.GONE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_busca, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.menuFiltro ->{
+                calBusca.visibility = View.VISIBLE
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setupRecyclerView(){
@@ -28,7 +48,7 @@ class HistoricoActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        onClickBuscar("",true)
+        onClickBuscar("",false)
     }
 
     private fun onClickItemRecyclerView(index: Int){
@@ -51,13 +71,16 @@ class HistoricoActivity : BaseActivity() {
                 adapter = HistoricoAdapter(this,listaFiltrada) {onClickItemRecyclerView(it)}
                 recyclerView.adapter = adapter
                 pbHistorico.visibility = View.GONE
+                if(listaFiltrada.count() > 4) {
+                    calBusca.visibility = View.GONE
+                }
             }
         }).start()
     }
 
     fun onClickBuscaData() {
         calBusca.setOnDateChangeListener(CalendarView.OnDateChangeListener { view, ano, mes, dia ->
-            onClickBuscar("$dia/${mes+1}/$ano",false)
+            onClickBuscar("$dia/${mes+1}/$ano",true)
         })
     }
 }
