@@ -51,6 +51,7 @@ class MainActivity : BaseActivity() {
     private fun fetchtUltimoRegistro(ultimoReg: HistoricoVO){
         getInstanceSharedPreferences().edit(){
             putString("ultimoReg",Gson().toJson(ultimoReg))
+            commit()
         }
     }
 
