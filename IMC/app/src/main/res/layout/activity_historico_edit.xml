@@ -130,7 +130,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnSalvarConato"
+            android:id="@+id/btnSalvarRegistro"
             android:text="@string/btnHistEditSalvar_registro"
             android:layout_marginTop="16dp"
             style="@style/btStyles"
@@ -138,8 +138,8 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/btnExcluirContato"
-            android:onClick="onClickExcluirContato"
+            android:id="@+id/btnExcluirRegistro"
+            android:onClick="onClickExcluirRegistro"
             android:text="@string/btnHistEditExcluir_registro"
             android:layout_marginTop="8dp"
             style="@style/btStyles"

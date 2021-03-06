@@ -10,18 +10,22 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.edit
+import androidx.lifecycle.ViewModelProvider
 import com.brsan7.imc.R.layout
 import com.brsan7.imc.R.string
 import com.brsan7.imc.application.HistoricoApplication
 import com.brsan7.imc.model.HistoricoVO
+import com.brsan7.imc.model.RecursosStrings
+import com.brsan7.imc.viewmodels.MainViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : BaseActivity() {
+
+    lateinit var mViewModel : MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,6 @@ class MainActivity : BaseActivity() {
         setupToolBar(toolBar, getString(string.mainTitulo), false)
         setListeners()
         setUltimoRegistro()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -48,6 +51,7 @@ class MainActivity : BaseActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     private fun fetchtUltimoRegistro(ultimoReg: HistoricoVO){
         getInstanceSharedPreferences().edit(){
             putString("ultimoReg",Gson().toJson(ultimoReg))
@@ -68,7 +72,6 @@ class MainActivity : BaseActivity() {
                         genero = "Masculino",
                         observacao = ""
                 )
-
         val ultimoItemRegGson = getInstanceSharedPreferences().getString("ultimoReg",Gson().toJson(defHist))
         val convTipo = object : TypeToken<HistoricoVO>(){}.type
         return Gson().fromJson(ultimoItemRegGson,convTipo)
@@ -78,106 +81,77 @@ class MainActivity : BaseActivity() {
         val ultimoItemReg:HistoricoVO = getSharedUltimoRegistro()
         etPeso.setText(ultimoItemReg.peso)
         etAltura.setText(ultimoItemReg.altura)
-        if(ultimoItemReg.genero=="Feminino") {
+        if(ultimoItemReg.genero == getString(R.string.seletorGenCMP)
+                && mViewModel.fstScan) {
+
             seletorGen.performClick()
         }
     }
 
     private fun setListeners(){
+        mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        sendStringRes()
+        updateViewModel()
         calcularBt.setOnClickListener {
-            calcularImc(etPeso.text.toString(), etAltura.text.toString())
+            validarCalculo()
         }
         seletorGen.setOnClickListener {
-            selecionaGenero()
+            mViewModel.selecionaGenero(seletorGen.text.toString())
+            updateViewModel()
         }
     }
 
-    private fun selecionaGenero(){
-        if(seletorGen.text==getString(string.seletorGenCMP)){imagemResult.setImageResource(R.drawable.f2)}
-        else{imagemResult.setImageResource(R.drawable.m2)}
-        faixaPesoTv.text = getString(string.peso_ideal)
-        resultadoFaixaPesoTv.text = ""
-        resultadoTv.text = ""
+    private fun sendStringRes(){
+        val recursos = RecursosStrings(
+                str1_1 = getString(string.abaixoPeso),
+                str2_1 = getString(string.pesoIdeal),
+                str3_1 = getString(string.acimaPeso),
+                str4_1 = getString(string.obesidade1),
+                str5_1 = getString(string.obesidade2),
+                str6_1 = getString(string.obesidade3),
+                str2 = getString(string.falta),
+                str3 = getString(string.kg),
+                str4 = getString(string.para),
+                str5 = getString(string.calcPesoIdealBaixo),
+                str6 = getString(string.e),
+                str7 = getString(R.string.seletorGenCMP)
+        )
+        mViewModel.getStringRes(recursos)
     }
 
-    private fun calcularImc(pesoIn: String, alturaIn: String){
-        val peso = pesoIn.toFloatOrNull()
-        val altura = alturaIn.toFloatOrNull()
-        val formatar = DecimalFormat("0.##")
+    private fun updateViewModel(){
+        mViewModel.mResultadoImc.observe(this, androidx.lifecycle.Observer { valor->
+            tvResultadoImc.text = valor
+        })
+        mViewModel.mClassificacaoImc.observe(this, androidx.lifecycle.Observer { valor->
+            tvClassificacaoImc.text = valor
+        })
+        mViewModel.mFaixaPeso.observe(this, androidx.lifecycle.Observer { valor->
+            tvFaixaPeso.text = valor
+        })
+        mViewModel.mSilhueta.observe(this, androidx.lifecycle.Observer { valor->
+            ivSilhueta.setImageResource(valor)
+        })
+    }
 
-        if (peso!=null && altura!=null) {
-            val imc = peso / (altura * altura)
-            val pesoIdealIni=18.0*(altura*altura)
-            val pesoIdealFim=25.0*(altura*altura)
-            val pesoSobrando=peso-pesoIdealFim
-            val pesoFaltando=pesoIdealIni-peso
-            var msgTrasf:String
+    private fun validarCalculo(){
+        val peso = etPeso.text.toString().toFloatOrNull()
+        val altura = etAltura.text.toString().toFloatOrNull()
 
-            msgTrasf="IMC: "+formatar.format(imc)
-            resultadoTv.text = msgTrasf
-
-            when {
-                imc<18.5->{
-                    msgTrasf = getString(string.abaixoPeso)+getString(string.falta)+formatar.format(pesoFaltando)+getString(string.kg)+getString(string.para)
-                    faixaPesoTv.text = msgTrasf
-                    msgTrasf = getString(string.calcPesoIdealCima)+formatar.format(pesoIdealIni)+getString(string.e)+formatar.format(pesoIdealFim)+getString(string.kg)
-                    resultadoFaixaPesoTv.text = msgTrasf
-                    if(seletorGen.text == getString(string.seletorGenCMP)){imagemResult.setImageResource(R.drawable.f1)}
-                    else{imagemResult.setImageResource(R.drawable.m1)}
-                }
-                imc>=18.5&&imc<25->{
-                    faixaPesoTv.text = getString(string.pesoIdeal)
-                    msgTrasf = getString(string.calcPesoIdealBaixo)+formatar.format(pesoIdealIni)+getString(string.e)+formatar.format(pesoIdealFim)+getString(string.kg)
-                    resultadoFaixaPesoTv.text = msgTrasf
-                    if(seletorGen.text == getString(string.seletorGenCMP)){imagemResult.setImageResource(R.drawable.f2)}
-                    else{imagemResult.setImageResource(R.drawable.m2)}
-                }
-                imc>=25.0&&imc<30->{
-                    msgTrasf = getString(string.acimaPeso)+getString(string.falta)+formatar.format(pesoSobrando)+getString(string.kg)+getString(string.para)
-                    faixaPesoTv.text = msgTrasf
-                    msgTrasf = getString(string.calcPesoIdealBaixo)+formatar.format(pesoIdealIni)+getString(string.e)+formatar.format(pesoIdealFim)+getString(string.kg)
-                    resultadoFaixaPesoTv.text = msgTrasf
-                    if(seletorGen.text == getString(string.seletorGenCMP)){imagemResult.setImageResource(R.drawable.f3)}
-                    else{imagemResult.setImageResource(R.drawable.m3)}
-                }
-                imc>=30.0&&imc<35->{
-                    msgTrasf = getString(string.obesidade1)+getString(string.falta)+formatar.format(pesoSobrando)+getString(string.kg)+getString(string.para)
-                    faixaPesoTv.text = msgTrasf
-                    msgTrasf = getString(string.calcPesoIdealBaixo)+formatar.format(pesoIdealIni)+getString(string.e)+formatar.format(pesoIdealFim)+getString(string.kg)
-                    resultadoFaixaPesoTv.text = msgTrasf
-                    if(seletorGen.text == getString(string.seletorGenCMP)){imagemResult.setImageResource(R.drawable.f4)}
-                    else{imagemResult.setImageResource(R.drawable.m4)}
-                }
-                imc>=35.0&&imc<40->{
-                    msgTrasf = getString(string.obesidade2)+getString(string.falta)+formatar.format(pesoSobrando)+getString(string.kg)+getString(string.para)
-                    faixaPesoTv.text = msgTrasf
-                    msgTrasf = getString(string.calcPesoIdealBaixo)+formatar.format(pesoIdealIni)+getString(string.e)+formatar.format(pesoIdealFim)+getString(string.kg)
-                    resultadoFaixaPesoTv.text = msgTrasf
-                    if(seletorGen.text == getString(string.seletorGenCMP)){imagemResult.setImageResource(R.drawable.f5)}
-                    else{imagemResult.setImageResource(R.drawable.m5)}
-                }
-                imc>=40.0->{
-                    msgTrasf = getString(string.obesidade3)+getString(string.falta)+formatar.format(pesoSobrando)+getString(string.kg)+getString(string.para)
-                    faixaPesoTv.text = msgTrasf
-                    msgTrasf = getString(string.calcPesoIdealBaixo)+formatar.format(pesoIdealIni)+getString(string.e)+formatar.format(pesoIdealFim)+getString(string.kg)
-                    resultadoFaixaPesoTv.text = msgTrasf
-                    if(seletorGen.text == getString(string.seletorGenCMP)){imagemResult.setImageResource(R.drawable.f5)}
-                    else{imagemResult.setImageResource(R.drawable.m5)}
-                }
-            }
-
+        if (peso != null && altura != null){
+            mViewModel.calcularImc(peso,altura,seletorGen.text.toString())
+            updateViewModel()
             val date = Calendar.getInstance().time
             val dateTimeFormat = SimpleDateFormat("d/M/yyyy_HH:mm:ss", Locale.getDefault())
             val itemHist = HistoricoVO(
+                    altura = altura.toString(),
                     data = dateTimeFormat.format(date),
-                    peso = pesoIn,
-                    altura = alturaIn,
+                    peso = peso.toString(),
                     genero = seletorGen.text.toString(),
                     observacao = ""
             )
             pbMain.visibility = View.VISIBLE
             Thread(Runnable {
-                Thread.sleep(500)//retorno visual de acesso e alteração no Banco de Dados
                 HistoricoApplication.instance.helperDB?.salvarRegistro(itemHist)
                 runOnUiThread {
                     pbMain.visibility = View.GONE
@@ -185,7 +159,6 @@ class MainActivity : BaseActivity() {
             }).start()
             fetchtUltimoRegistro(itemHist)
         }
-        else{
-            Toast.makeText(this, getString(string.msgToast), Toast.LENGTH_SHORT).show()}
+        else{Toast.makeText(this, getString(R.string.msgToastMain), Toast.LENGTH_SHORT).show()}
     }
 }

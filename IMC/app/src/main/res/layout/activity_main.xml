@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/resultadoTv"
+            android:id="@+id/tvResultadoImc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/msgInicio"
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toBottomOf="@id/toolBar"/>
 
         <TextView
-            android:id="@+id/faixaPesoTv"
+            android:id="@+id/tvClassificacaoImc"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -44,12 +44,12 @@
             android:layout_height="wrap_content"
             android:text="@string/peso_ideal"
             app:layout_constraintBottom_toTopOf="@+id/seletorGen"
-            app:layout_constraintEnd_toStartOf="@id/imagemResult"
+            app:layout_constraintEnd_toStartOf="@id/ivSilhueta"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resultadoTv" />
+            app:layout_constraintTop_toBottomOf="@+id/tvResultadoImc" />
 
         <TextView
-            android:id="@+id/resultadoFaixaPesoTv"
+            android:id="@+id/tvFaixaPeso"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -59,17 +59,17 @@
             android:text=""
             app:layout_constraintBottom_toTopOf="@+id/seletorGen"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imagemResult"
-            app:layout_constraintTop_toBottomOf="@+id/resultadoTv" />
+            app:layout_constraintStart_toEndOf="@id/ivSilhueta"
+            app:layout_constraintTop_toBottomOf="@+id/tvResultadoImc" />
 
         <ImageView
-            android:id="@+id/imagemResult"
+            android:id="@+id/ivSilhueta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/seletorGen"
-            app:layout_constraintEnd_toStartOf="@+id/resultadoFaixaPesoTv"
-            app:layout_constraintStart_toEndOf="@+id/faixaPesoTv"
-            app:layout_constraintTop_toBottomOf="@+id/resultadoTv"
+            app:layout_constraintEnd_toStartOf="@+id/tvFaixaPeso"
+            app:layout_constraintStart_toEndOf="@+id/tvClassificacaoImc"
+            app:layout_constraintTop_toBottomOf="@+id/tvResultadoImc"
             app:srcCompat="@drawable/m2" />
 
         <EditText

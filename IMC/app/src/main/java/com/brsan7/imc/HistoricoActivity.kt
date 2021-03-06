@@ -7,21 +7,25 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.CalendarView
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brsan7.imc.adapter.HistoricoAdapter
 import com.brsan7.imc.application.HistoricoApplication
 import com.brsan7.imc.model.HistoricoVO
+import com.brsan7.imc.viewmodels.HistoricoViewModel
 import kotlinx.android.synthetic.main.activity_historico.*
 
 class HistoricoActivity : BaseActivity() {
 
-    private var adapter: HistoricoAdapter? = null
+    lateinit var hViewModel : HistoricoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_historico)
         setupToolBar(toolBar, getString(R.string.historicoTitulo),true)
         setupRecyclerView()
+        onClickBuscar("",false)
         onClickBuscaData()
         calBusca.visibility = View.GONE
     }
@@ -44,11 +48,7 @@ class HistoricoActivity : BaseActivity() {
 
     private fun setupRecyclerView(){
         recyclerView.layoutManager = LinearLayoutManager(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        onClickBuscar("",false)
+        hViewModel = ViewModelProvider(this).get(HistoricoViewModel::class.java)
     }
 
     private fun onClickItemRecyclerView(index: Int){
@@ -58,29 +58,35 @@ class HistoricoActivity : BaseActivity() {
     }
 
     private fun onClickBuscar(busca:String, isBuscaPorData:Boolean){
-        var listaFiltrada: List<HistoricoVO> = mutableListOf()
-        pbHistorico.visibility = View.VISIBLE
-        Thread(Runnable {
-            Thread.sleep(500)//retorno visual de acesso e alteração no Banco de Dados
-            try {
-                listaFiltrada = HistoricoApplication.instance.helperDB?.buscarRegistros(busca,isBuscaPorData) ?: mutableListOf()
-            }catch (ex: Exception){
-                ex.printStackTrace()
-            }
-            runOnUiThread {
-                adapter = HistoricoAdapter(this,listaFiltrada) {onClickItemRecyclerView(it)}
-                recyclerView.adapter = adapter
-                pbHistorico.visibility = View.GONE
-                if(listaFiltrada.count() > 4) {
-                    calBusca.visibility = View.GONE
+        if(hViewModel.fstScan || isBuscaPorData) {
+            var listaFiltrada: List<HistoricoVO> = mutableListOf()
+            hViewModel.fstScan = false
+            pbHistorico.visibility = View.VISIBLE
+            Thread(Runnable {
+                try {
+                    listaFiltrada = HistoricoApplication.instance.helperDB?.buscarRegistros(busca, isBuscaPorData)
+                            ?: mutableListOf()
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
                 }
-            }
-        }).start()
+                runOnUiThread {
+                    hViewModel.hAdapter.value = HistoricoAdapter(this, listaFiltrada) { onClickItemRecyclerView(it) }
+                    if (hViewModel.hAdapter.value?.itemCount ?: 0 > 4 ) {
+                        calBusca.visibility = View.GONE
+                    }
+                    pbHistorico.visibility = View.GONE
+                }
+            }).start()
+        }
+        hViewModel.hAdapter.observe(this, androidx.lifecycle.Observer { valor->
+            recyclerView.adapter = valor
+        })
     }
 
     fun onClickBuscaData() {
         calBusca.setOnDateChangeListener(CalendarView.OnDateChangeListener { view, ano, mes, dia ->
-            onClickBuscar("$dia/${mes+1}/$ano",true)
+                onClickBuscar("$dia/${mes + 1}/$ano", true)
+            Toast.makeText(this,getString(R.string.msgToastHistorico)+"$dia/${mes + 1}/$ano",Toast.LENGTH_SHORT).show()
         })
     }
 }

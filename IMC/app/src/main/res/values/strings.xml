@@ -19,7 +19,7 @@
     <string name="peso_ideal">Peso Ideal</string>
     <string name="falta">"\nFaltam\n"</string>
     <string name="para">\nPara o Peso Ideal</string>
-    <string name="msgToast">Digite o Peso e Altura</string>
+    <string name="msgToastMain">Digite o Peso e Altura</string>
     <string name="mainTitulo">Cálculo do IMC</string>
     <string name="seletorGenCMP">Feminino</string>
     <string name="constKg">Kg</string>
@@ -36,4 +36,6 @@
     <string name="historicoEditTitulo">Histórico Edit</string>
     <string name="historicoEditTituloCMP">Histórico Edit</string>
     <string name="historicoTituloCMP">Histórico</string>
+    <string name="msgToastHistorico">\"Registros em: "</string>
+    <string name="msgToastHistoricoEdit">Registro Excluído</string>
 </resources>
