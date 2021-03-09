@@ -67,6 +67,7 @@ class MainActivity : BaseActivity() {
         val defHist = HistoricoVO(
                         id = 0,
                         data = "",
+                        hora = "",
                         peso = "",
                         altura = "",
                         genero = "Masculino",
@@ -142,10 +143,12 @@ class MainActivity : BaseActivity() {
             mViewModel.calcularImc(peso,altura,seletorGen.text.toString())
             updateViewModel()
             val date = Calendar.getInstance().time
-            val dateTimeFormat = SimpleDateFormat("d/M/yyyy_HH:mm:ss", Locale.getDefault())
+            val dateFormat = SimpleDateFormat("d/M/yyyy", Locale.getDefault())
+            val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
             val itemHist = HistoricoVO(
                     altura = altura.toString(),
-                    data = dateTimeFormat.format(date),
+                    data = dateFormat.format(date),
+                    hora = timeFormat.format(date),
                     peso = peso.toString(),
                     genero = seletorGen.text.toString(),
                     observacao = ""

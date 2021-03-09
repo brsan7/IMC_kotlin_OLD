@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
     android:background="@color/verde"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolBar"
-        app:titleTextColor="@color/verde"
-        android:textStyle="bold"
-        android:background="#2C2B2B"
-        android:elevation="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +38,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:background="#4A4A4A"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/constHistEditHora"
+                    style="@style/edHist" />
+                <TextView
+                    android:id="@+id/tvHoraEdit"
+                    style="@style/edHist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Campo Hora"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
                 android:background="#4A4A4A"
                 android:orientation="horizontal">
                 <TextView
@@ -69,6 +74,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/constHistEditKg"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="#4A4A4A"
+                android:orientation="horizontal">
                 <TextView
                     style="@style/edHist"
                     android:layout_width="wrap_content"
@@ -89,7 +102,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:background="#4A4A4A"
                 android:orientation="horizontal">
                 <TextView
@@ -122,37 +134,14 @@
                 android:text="@string/constHistEditObservacoes"/>
             <EditText
                 android:id="@+id/etObservacaoEdit"
-                android:hint="ex: Jejum X\nex: Dieta Y\nex: Exercício Z"
+                android:hint="@string/constHistEditObservacoesHint"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:layout_width="match_parent"
                 android:layout_height="136dp" />
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnSalvarRegistro"
-            android:text="@string/btnHistEditSalvar_registro"
-            android:layout_marginTop="16dp"
-            style="@style/btStyles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/btnExcluirRegistro"
-            android:onClick="onClickExcluirRegistro"
-            android:text="@string/btnHistEditExcluir_registro"
-            android:layout_marginTop="8dp"
-            style="@style/btStyles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
-    <ProgressBar
-        android:id="@+id/pbHistoricoEdit"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </ProgressBar>
-</FrameLayout>

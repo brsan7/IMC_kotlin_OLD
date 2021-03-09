@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".HistoricoActivity" />
-        <activity android:name=".HistoricoEditActivity" />
+        <activity android:name=".HistoricoEditDialog" />
 
     </application>
 

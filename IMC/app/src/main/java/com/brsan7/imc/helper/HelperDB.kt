@@ -18,6 +18,7 @@ class HelperDB (
     val TABLE_NAME = "historico"
     val COLUMNS_ID = "id"
     val COLUMNS_DATA = "data"
+    val COLUMNS_HORA = "hora"
     val COLUMNS_PESO = "peso"
     val COLUMNS_ALTURA = "altura"
     val COLUMNS_GENERO = "genero"
@@ -26,6 +27,7 @@ class HelperDB (
     val CREATE_TABLE = "CREATE TABLE $TABLE_NAME(" +
             "$COLUMNS_ID INTEGER NOT NULL," +
             "$COLUMNS_DATA TEXT NOT NULL," +
+            "$COLUMNS_HORA TEXT NOT NULL," +
             "$COLUMNS_PESO TEXT NOT NULL," +
             "$COLUMNS_ALTURA TEXT NOT NULL," +
             "$COLUMNS_GENERO TEXT NOT NULL," +
@@ -64,6 +66,7 @@ class HelperDB (
             var itemHist = HistoricoVO(
                     cursor.getInt(cursor.getColumnIndex(COLUMNS_ID)),
                     cursor.getString(cursor.getColumnIndex(COLUMNS_DATA)),
+                    cursor.getString(cursor.getColumnIndex(COLUMNS_HORA)),
                     cursor.getString(cursor.getColumnIndex(COLUMNS_PESO)),
                     cursor.getString(cursor.getColumnIndex(COLUMNS_ALTURA)),
                     cursor.getString(cursor.getColumnIndex(COLUMNS_GENERO)),
@@ -78,9 +81,9 @@ class HelperDB (
     fun salvarRegistro(itemHist: HistoricoVO){
         val db: SQLiteDatabase = writableDatabase ?: return
         val sql = "INSERT INTO $TABLE_NAME " +
-                "($COLUMNS_DATA,$COLUMNS_PESO,$COLUMNS_ALTURA,$COLUMNS_GENERO,$COLUMNS_OBS) " +
-                "VALUES(?,?,?,?,?)"
-        val argumento = arrayOf(itemHist.data, itemHist.peso, itemHist.altura, itemHist.genero, itemHist.observacao)
+                "($COLUMNS_DATA,$COLUMNS_HORA,$COLUMNS_PESO,$COLUMNS_ALTURA,$COLUMNS_GENERO,$COLUMNS_OBS) " +
+                "VALUES(?,?,?,?,?,?)"
+        val argumento = arrayOf(itemHist.data, itemHist.hora, itemHist.peso, itemHist.altura, itemHist.genero, itemHist.observacao)
         db.execSQL(sql,argumento)
         db.close()
     }
