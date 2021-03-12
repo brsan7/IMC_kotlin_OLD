@@ -12,5 +12,7 @@ data class RecursosStrings(
         var str4: String = "",
         var str5: String = "",
         var str6: String = "",
-        var str7: String = ""
+        var str7: String = "",
+        var str8: String = "",
+        var str9: String = ""
 )

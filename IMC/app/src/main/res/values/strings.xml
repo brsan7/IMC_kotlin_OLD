@@ -39,4 +39,9 @@
     <string name="btnSalvarHistoricoEdit">Salvar</string>
     <string name="constHistEditHora">"Hora: "</string>
     <string name="constHistEditObservacoesHint">exemplo: Dieta\nou\nexemplo: Exercício</string>
+    <string name="notifyAumento">"Seu peso aumentou "</string>
+    <string name="notifyDiminui">"Seu peso diminuiu "</string>
+    <string name="boasVindas">Bem Vindo ao Cálculo do IMC</string>
+    <string name="descricaoBoasVindas">Toque aqui para acompanhar o seu Histórico</string>
+    <string name="tituloNotificacao">Alteração de Peso</string>
 </resources>

@@ -3,6 +3,7 @@ package com.brsan7.imc.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.brsan7.imc.R
+import com.brsan7.imc.model.HistoricoVO
 import com.brsan7.imc.model.RecursosStrings
 import java.text.DecimalFormat
 
@@ -74,6 +75,20 @@ class MainViewModel : ViewModel() {
                 if(seletorGen == recursosStr.str7){mSilhueta.value = R.drawable.f5}
                 else{mSilhueta.value = R.drawable.m5}
             }
+        }
+    }
+
+    fun calcularProgresso(ultimoItemReg: HistoricoVO,itemHist: HistoricoVO):String{
+        val formatar = DecimalFormat("0.##")
+        if(ultimoItemReg.peso.toFloat()<itemHist.peso.toFloat()){
+            return recursosStr.str8+
+                    formatar.format(itemHist.peso.toFloat() - ultimoItemReg.peso.toFloat())+
+                    recursosStr.str3
+        }
+        else{
+            return recursosStr.str9+
+                    formatar.format(ultimoItemReg.peso.toFloat() - itemHist.peso.toFloat())+
+                    recursosStr.str3
         }
     }
 

@@ -16,6 +16,8 @@ import com.brsan7.imc.R.string
 import com.brsan7.imc.application.HistoricoApplication
 import com.brsan7.imc.model.HistoricoVO
 import com.brsan7.imc.model.RecursosStrings
+import com.brsan7.imc.provider.ImcContentProvider.Companion.URI_REGISTROS
+import com.brsan7.imc.utils.showNotification
 import com.brsan7.imc.viewmodels.MainViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -115,7 +117,9 @@ class MainActivity : BaseActivity() {
                 str4 = getString(string.para),
                 str5 = getString(string.calcPesoIdealBaixo),
                 str6 = getString(string.e),
-                str7 = getString(R.string.seletorGenCMP)
+                str7 = getString(R.string.seletorGenCMP),
+                str8 = getString(R.string.notifyAumento),
+                str9 = getString(R.string.notifyDiminui)
         )
         mViewModel.getStringRes(recursos)
     }
@@ -153,6 +157,15 @@ class MainActivity : BaseActivity() {
                     genero = seletorGen.text.toString(),
                     observacao = ""
             )
+
+            val ultimoItemReg:HistoricoVO = getSharedUltimoRegistro()
+            if (ultimoItemReg.peso.toFloatOrNull() != null) {
+                this.showNotification("7", getString(string.tituloNotificacao),
+                        mViewModel.calcularProgresso(ultimoItemReg, itemHist))
+            }
+            else{this.showNotification("7", getString(string.boasVindas),
+                getString(string.descricaoBoasVindas))}
+
             pbMain.visibility = View.VISIBLE
             Thread(Runnable {
                 HistoricoApplication.instance.helperDB?.salvarRegistro(itemHist)
